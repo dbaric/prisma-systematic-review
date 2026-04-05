@@ -1,5 +1,2 @@
-output/*
-!output/.gitkeep
-
 work/*
 !work/.gitkeep
