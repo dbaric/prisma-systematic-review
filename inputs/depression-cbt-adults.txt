@@ -1,0 +1,46 @@
+RESEARCH TOPIC: Cognitive Behavioral Therapy for Depression in Adults
+
+RESEARCH QUESTION:
+What is the efficacy of cognitive behavioral therapy (CBT) compared to standard care, placebo, or other psychotherapies in treating major depressive disorder in adults (18+ years)?
+
+POPULATION:
+- Adults aged 18 and older
+- Diagnosed with major depressive disorder (MDD) per DSM-5 or ICD-11 criteria
+- Any severity level (mild, moderate, severe)
+- Any treatment setting (primary care, outpatient mental health, inpatient)
+
+INTERVENTION:
+- Cognitive behavioral therapy (CBT)
+- Delivered individually or in groups
+- Any duration and frequency
+- Any delivery method (face-to-face, teletherapy, digital)
+
+COMPARATOR:
+- Standard/usual care
+- Placebo/attention control
+- Other psychotherapies (psychodynamic, interpersonal, supportive)
+- Waitlist control
+- Treatment as usual
+
+OUTCOMES (PRIMARY):
+- Depression symptom severity (measured by validated scales: PHQ-9, BDI-II, HDRS, etc.)
+- Remission rates (50% reduction or full remission from baseline)
+- Response rates
+
+OUTCOMES (SECONDARY):
+- Quality of life
+- Functional impairment
+- Relapse/recurrence rates
+- Treatment dropout rates
+- Adverse events
+
+STUDY DESIGN:
+- Randomized controlled trials (RCTs)
+- Published in English
+- Published 2010 or later
+- Sample size ≥20 participants
+
+EXCLUSION CRITERIA:
+- Studies exclusively in populations with bipolar disorder, psychotic disorders, active substance use
+- Studies without comparison group
+- Case reports, editorials, commentaries
