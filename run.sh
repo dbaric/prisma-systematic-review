@@ -15,8 +15,8 @@ if [ -z "$1" ]; then
   echo "Usage: ./run.sh <input-file>"
   echo ""
   echo "Example:"
+  echo "  ./run.sh fleet-optimization-rent-a-car.txt"
   echo "  ./run.sh depression-cbt-adults.txt"
-  echo "  ./run.sh covid-vaccine-efficacy.txt"
   echo ""
   echo "Input files should be in the inputs/ directory."
   exit 1
@@ -879,8 +879,8 @@ for round in $(seq 1 $PHASE_3C_MAX_ROUNDS); do
   # Extract Phase 3a and 3b dependencies
   PHASE_3A_ELIGIBILITY=$(sed -n '/^## Eligibility Criteria$/,/^## [^[:space:]]/p' "$OUTPUT_DIR/phase-3a.md" | sed '1d;$d')
   validate_extraction "PHASE_3A_ELIGIBILITY" "$PHASE_3A_ELIGIBILITY" "Eligibility Criteria"
-  PHASE_3B_EFFECT_MEASURES=$(sed -n '/^## Effect Measures$/,/^## [^[:space:]]/p' "$OUTPUT_DIR/phase-3b.md" | sed '1d;$d')
-  validate_extraction "PHASE_3B_EFFECT_MEASURES" "$PHASE_3B_EFFECT_MEASURES" "Effect Measures"
+  PHASE_3B_EFFECT_MEASURES=$(sed -n '/^## Item 11: Effect Measures$/,/^## [^[:space:]]/p' "$OUTPUT_DIR/phase-3b.md" | sed '1d;$d')
+  validate_extraction "PHASE_3B_EFFECT_MEASURES" "$PHASE_3B_EFFECT_MEASURES" "Item 11: Effect Measures"
 
   # Extract Fork Commitment from Phase 1 for consistency
   PHASE_1_FORK_COMMITMENT=$(sed -n '/^## Fork Commitment$/,/^## [^[:space:]]/p' "$OUTPUT_DIR/phase-1.md" | sed '1d;$d')

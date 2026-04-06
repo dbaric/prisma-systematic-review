@@ -1,0 +1,40 @@
+RESEARCH TOPIC: Data-Driven Fleet Management Optimization in Rent-a-Car Operations
+
+RESEARCH QUESTION:
+How can machine learning and time series forecasting methods be applied to internal rent-a-car operational data to optimize vehicle distribution, predict maintenance needs, and forecast demand across multiple locations?
+
+POPULATION:
+- Rent-a-car companies operating multiple branches (10–15 locations)
+- Companies with structured internal reservation and fleet management systems
+- Any company size with sufficient historical data for modeling
+
+INTERVENTION:
+- Machine learning models for demand forecasting (ARIMA, Prophet, SARIMA, LSTM)
+- Predictive maintenance models (survival analysis, Random Forest, XGBoost)
+- Vehicle distribution optimization models (regression, classification)
+
+COMPARATOR:
+- Baseline heuristics or rule-based fleet management
+- Static allocation strategies (fixed number of vehicles per location)
+- Reactive (non-predictive) maintenance scheduling
+
+OUTCOMES (PRIMARY):
+- Forecast accuracy of vehicle demand per location and category (MAE, RMSE, MAPE)
+- Reduction in days where a location lacks a requested vehicle category
+- Accuracy of maintenance need prediction (precision, recall, F1)
+
+OUTCOMES (SECONDARY):
+- Reduction in unplanned breakdown costs
+- Improvement in fleet utilization rate
+- Accuracy of demand forecasting across different time horizons (1 week vs. 1 month ahead)
+- Vehicle replacement decision accuracy (optimal sell/replace timing)
+
+STUDY DESIGN:
+- Empirical study using private internal dataset
+- Dataset includes: reservations, fleet records, and service logs
+- Three modular approaches evaluated independently and as an integrated system
+
+EXCLUSION CRITERIA:
+- Models trained exclusively on publicly available or synthetic datasets
+- Approaches without a quantitative baseline for comparison
+- Single-location studies not generalizable to multi-branch operations
