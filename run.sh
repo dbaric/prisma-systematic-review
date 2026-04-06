@@ -41,34 +41,31 @@ if ! [[ "$THEME" =~ ^[a-z0-9\-]+$ ]]; then
   exit 1
 fi
 
+# TEMPORARILY DISABLED — resuming from existing phase-3b output
 # Check if theme already exists
-if [ -d "$OUTPUT_DIR" ]; then
-  echo "Error: Review '$THEME' already exists at $OUTPUT_DIR"
-  exit 1
-fi
+# if [ -d "$OUTPUT_DIR" ]; then
+#   echo "Error: Review '$THEME' already exists at $OUTPUT_DIR"
+#   exit 1
+# fi
 
-echo "Setting up PRISMA review: $THEME"
+# echo "Setting up PRISMA review: $THEME"
 
 # Create output directory
-mkdir -p "$OUTPUT_DIR"
+# mkdir -p "$OUTPUT_DIR"
 
 # Copy all template files (including new sub-phases and Phase 0)
-for phase in 0 1 2 3a 3b 3c 4a 4b 4c 5 6; do
-  src="$TEMPLATE_DIR/phase-$phase.md"
-  dst="$OUTPUT_DIR/phase-$phase.md"
-  if [ ! -f "$src" ]; then
-    echo "Error: Missing template: $src"
-    exit 1
-  fi
-  cp "$src" "$dst"
-done
+# for phase in 0 1 2 3a 3b 3c 4a 4b 4c 5 6; do
+#   src="$TEMPLATE_DIR/phase-$phase.md"
+#   dst="$OUTPUT_DIR/phase-$phase.md"
+#   if [ ! -f "$src" ]; then
+#     echo "Error: Missing template: $src"
+#     exit 1
+#   fi
+#   cp "$src" "$dst"
+# done
 
 # Prepare variables
 START_DATE=$(date +"%Y-%m-%d")
-
-echo "Setup complete. Starting PRISMA workflow (Phase 0 + 9 draft phases + multi-round judge loops)..."
-echo "(1 exploration + 9 drafts + up to 28 review rounds = worst case 38 sessions; average ~28)"
-echo ""
 
 # =============================================================================
 # VALIDATION FUNCTIONS
@@ -148,7 +145,8 @@ auto_fix_fabrication() {
 # =============================================================================
 # PHASE 0: Landscape & Forks (exploration before formal commitment)
 # =============================================================================
-
+# TEMPORARILY DISABLED — resuming from phase-3c
+if false; then
 echo "[Phase 0: Landscape] Generating Landscape & Forks..."
 
 PHASE_0_MAX_ROUNDS=2
@@ -311,10 +309,13 @@ $(cat "$INPUT_FILE")
 done
 
 echo "✓ Phase 0 complete"
+fi # END TEMPORARILY DISABLED Phase 0
 
 # =============================================================================
 # PHASE 1: Title & Abstract (with iterative judge loop)
 # =============================================================================
+# TEMPORARILY DISABLED — resuming from phase-3c
+if false; then
 
 echo "[Phase 1/10] Generating Title & Abstract..."
 
@@ -430,10 +431,13 @@ $(cat phases/judge-phase-1.md)
 done
 
 echo "✓ Phase 1 complete"
+fi # END TEMPORARILY DISABLED Phase 1
 
 # =============================================================================
 # PHASE 2: Introduction (with iterative judge loop)
 # =============================================================================
+# TEMPORARILY DISABLED — resuming from phase-3c
+if false; then
 
 echo "[Phase 2/18] Generating Introduction..."
 
@@ -632,10 +636,13 @@ $(cat "$OUTPUT_DIR/phase-2-redteam.md")
 fi
 
 echo "✓ Phase 2 complete"
+fi # END TEMPORARILY DISABLED Phase 2
 
 # =============================================================================
 # PHASE 3a: Search Protocol (with iterative judge loop — 3 rounds max)
 # =============================================================================
+# TEMPORARILY DISABLED — resuming from phase-3c
+if false; then
 
 echo "[Phase 3a/18] Generating Search Protocol..."
 
@@ -766,10 +773,13 @@ $(cat "$OUTPUT_DIR/phase-3a-redteam.md")
 fi
 
 echo "✓ Phase 3a complete"
+fi # END TEMPORARILY DISABLED Phase 3a
 
 # =============================================================================
 # PHASE 3b: Extraction & Assessment (with iterative judge loop — 2 rounds max)
 # =============================================================================
+# TEMPORARILY DISABLED — resuming from phase-3c
+if false; then
 
 echo "[Phase 3b/18] Generating Extraction & Assessment..."
 
@@ -863,6 +873,7 @@ $(cat phases/judge-phase-3b.md)
 done
 
 echo "✓ Phase 3b complete"
+fi # END TEMPORARILY DISABLED Phase 3b
 
 # =============================================================================
 # PHASE 3c: Synthesis Methods & GRADE (with iterative judge loop — 3 rounds max)
@@ -879,8 +890,8 @@ for round in $(seq 1 $PHASE_3C_MAX_ROUNDS); do
   # Extract Phase 3a and 3b dependencies
   PHASE_3A_ELIGIBILITY=$(sed -n '/^## Eligibility Criteria$/,/^## [^[:space:]]/p' "$OUTPUT_DIR/phase-3a.md" | sed '1d;$d')
   validate_extraction "PHASE_3A_ELIGIBILITY" "$PHASE_3A_ELIGIBILITY" "Eligibility Criteria"
-  PHASE_3B_EFFECT_MEASURES=$(sed -n '/^## Item 11: Effect Measures$/,/^## [^[:space:]]/p' "$OUTPUT_DIR/phase-3b.md" | sed '1d;$d')
-  validate_extraction "PHASE_3B_EFFECT_MEASURES" "$PHASE_3B_EFFECT_MEASURES" "Item 11: Effect Measures"
+  PHASE_3B_EFFECT_MEASURES=$(sed -n '/^## Effect Measures$/,/^## [^[:space:]]/p' "$OUTPUT_DIR/phase-3b.md" | sed '1d;$d')
+  validate_extraction "PHASE_3B_EFFECT_MEASURES" "$PHASE_3B_EFFECT_MEASURES" "Effect Measures"
 
   # Extract Fork Commitment from Phase 1 for consistency
   PHASE_1_FORK_COMMITMENT=$(sed -n '/^## Fork Commitment$/,/^## [^[:space:]]/p' "$OUTPUT_DIR/phase-1.md" | sed '1d;$d')
