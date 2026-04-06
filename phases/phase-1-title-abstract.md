@@ -1,7 +1,41 @@
 # Phase 1: Title & Abstract — PRISMA Items 1–12
 
 ## Dependencies
-> None — this is the first phase.
+> **Read `output/{theme}/phase-0.md` (Phase 0: Landscape & Forks) in full before writing anything.**
+> 
+> Then complete the Fork Commitment block below before drafting any PRISMA section. This block is mandatory — you may not begin Item 1 until it is written.
+
+## Fork Commitment
+
+Before drafting PRISMA sections, make explicit the fork you are committing to. This block is mandatory and must appear in your output before the Title section.
+
+**Instructions:** Read the Phase 0 landscape in full. Choose one fork. For each contested term, state your resolution. Name the rejected forks and state one methodological or epistemic reason for each rejection (not "less interesting" but a substantive reason). Then draft all 12 abstract items consistently with this commitment. If you find yourself writing an abstract that contradicts your chosen fork, revise the commitment — do not quietly abandon it.
+
+**Output template for this section (appears as first section in `output/{theme}/phase-1.md`):**
+
+```
+## Fork Commitment
+
+**Chosen fork:** [Name verbatim from Phase 0 Interpretive Forks]
+
+**Population boundary chosen:** [One sentence — who is in, who is out]
+**Comparator definition chosen:** [One sentence — what control/comparator is]
+**Primary outcome chosen:** [One sentence — what "success" means]
+**Synthesis approach chosen:** [One sentence — meta-analysis or narrative, and brief why]
+
+**Rejected forks and reasons:**
+- [Fork name]: [One methodological or epistemic sentence — why not this one]
+- [Fork name]: [One sentence]
+
+**Contested term resolutions:**
+- [Term from Phase 0]: [The resolution chosen for this review, one sentence]
+- [Term from Phase 0]: [The resolution chosen, one sentence]
+
+**Evidence flags acknowledged:**
+- [Flag from Phase 0]: [How this review handles or accepts this limitation]
+```
+
+---
 
 ## Steps
 
@@ -30,4 +64,4 @@
 
 ---
 
-All 12 abstract items must be labeled and explicitly addressed — do not omit or merge items. For updated/living review requirements, see `phases/output-format.md` → Special Requirements.
+All 12 abstract items must be labeled and explicitly addressed — do not omit or merge items. **All items must be consistent with your Fork Commitment above.** If you find yourself writing an abstract that contradicts the chosen fork or contested term resolutions, that is a signal to revise the commitment, not to quietly abandon it. For updated/living review requirements, see `phases/output-format.md` → Special Requirements.

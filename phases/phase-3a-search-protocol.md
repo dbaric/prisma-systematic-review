@@ -53,4 +53,24 @@
 
 ---
 
+## Methodological Decision Record
+
+In addition to the four PRISMA items above, document your decisions on 2–3 key operational choices. These are not full alternatives with alternatives/rubric — just the choice made and one sentence on why this choice was made over the main alternative.
+
+**Example format:**
+
+```
+## Methodological Decisions
+
+**Grey literature coverage:** [Decision: searched / not searched] | Why not [the alternative]: [one sentence]
+
+**Database selection:** [Decision: specific databases chosen] | Why not [the main alternative]: [one sentence]
+
+**NLP/AI tools in search:** [Decision: used / not used] | Why not [the main alternative]: [one sentence]
+```
+
+Make your choices explicit and document them in your Phase 3a output. This helps downstream phases (3b, 3c) understand why you made the infrastructure choices you did.
+
+---
+
 For updated/living review requirements, see `phases/output-format.md` → Special Requirements.

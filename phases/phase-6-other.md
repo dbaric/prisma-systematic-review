@@ -1,7 +1,15 @@
 # Phase 6: Other Information — PRISMA Items 24a–27
 
 ## Dependencies
-> None — but reference outputs from Phases 3 and 4 if describing what data/code was produced.
+> **NOTE: This is an isolated session. Input research data has been provided separately. Do NOT reference outputs from Phases 3 and 4.**
+
+## ⚠️ Placeholder Mode
+> Fields that cannot be derived from the research input (registration numbers, DOIs, author names,
+> grant numbers, URLs) MUST use `[PLACEHOLDER: field description]` format.
+> **Do NOT invent registration numbers, DOIs, URLs, author names, grant numbers, or file paths.**
+> **Do NOT generate any URLs or DOIs.** Fabricated registration IDs or DOIs are research integrity violations.
+> Examples: `[PLACEHOLDER: OSF registration number]`, `[PLACEHOLDER: GitHub URL]`,
+> `[PLACEHOLDER: lead author name]`, `[PLACEHOLDER: funding source]`
 
 ## Notes
 - All 3 Registration sub-items (24a–24c) must be explicitly labeled — do not merge or omit

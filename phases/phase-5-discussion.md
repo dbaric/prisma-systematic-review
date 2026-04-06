@@ -5,15 +5,25 @@
 > - `output/{theme}/phase-4.md` → `## GRADE Ratings` and `## Synthesis Results` — to reference your results and GRADE certainty ratings
 > - `output/{theme}/phase-3.md` → `## GRADE Setup` — to understand your GRADE framework
 
+## ⚠️ Data Mode
+> **The GRADE Ratings and Synthesis Results above contain [DATA REQUIRED] placeholders — no studies have been analyzed yet.**
+> For every specific result (effect sizes, CIs, I², p-values, study counts, percentages, NNTs),
+> write `[DATA REQUIRED: description of what value goes here]`.
+> Do not invent, estimate, or simulate numbers. Write the full discussion structure and GRADE
+> reasoning framework; leave every concrete datum as a placeholder.
+> Do not cite specific prior meta-analyses with specific statistics — use
+> `[LITERATURE: describe comparison needed, e.g., "compare to prior CBT meta-analysis SMD"]`.
+
 ## Steps
 
 1. **Item 23a: Interpretation of Findings**
    - Summarize key findings in relation to the research question
    - Consider findings in context of existing evidence
    - Discuss mechanisms if applicable
-   - Discuss findings in light of the certainty of evidence (GRADE ratings established in Item 22)
+   - **If GRADE ratings above are `[DATA REQUIRED]`, write the GRADE framework structure with certainty domains but leave all certainty level judgments as `[DATA REQUIRED: GRADE certainty for <comparison>]`. Discuss findings in light of the certainty of evidence (GRADE ratings established in Item 22) using this placeholder-driven approach.**
    - For updated reviews: compare key findings with the previous version, noting any changes in direction, magnitude, or precision
    - Address any discrepancies between the registered protocol and what was ultimately done
+   - **Do not compute NNT, ARD, NNH, or absolute benefit measures. Do not state specific percentages in patient-facing language.**
    → Write to: `output/{theme}/phase-5.md` → `## 23a: Interpretation of Findings`
 
 2. **Item 23b: Limitations of the Evidence Base**

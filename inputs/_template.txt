@@ -1,0 +1,40 @@
+RESEARCH TOPIC: [Your research topic]
+
+RESEARCH QUESTION:
+[Your specific research question]
+
+POPULATION:
+[Inclusion/exclusion criteria for population]
+
+INTERVENTION:
+[Description of intervention]
+
+COMPARATOR:
+[Comparator/control condition]
+
+OUTCOMES (PRIMARY):
+[Primary outcomes]
+
+OUTCOMES (SECONDARY):
+[Secondary outcomes]
+
+STUDY DESIGN:
+[Study design criteria, publication date range, sample size minimum]
+
+EXCLUSION CRITERIA:
+[Any additional exclusion criteria]
+
+---
+
+REGISTRATION:
+- Registry: [PROSPERO / OSF / ANZCTR / Not yet registered]
+- Registration number: [NUMBER or PENDING]
+- Registration date: [DATE or PENDING]
+
+PROTOCOL:
+- Protocol DOI: [DOI or PENDING]
+- Protocol citation: [Full citation or PENDING]
+
+AUTHORS: [List or PENDING]
+
+FUNDING: [Source or PENDING / Unfunded]
