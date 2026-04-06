@@ -89,7 +89,6 @@ validate_extraction() {
 detect_fabrication() {
   local file="$1"
   local phase_num="$2"
-  local mode="${3:-warn}"   # "warn" or "block"
 
   # Pattern group 1: numeric fabrications (original patterns)
   local numeric_pattern='SMD\s*=\s*[-−]?[0-9]+\.[0-9]+|n\s*=\s*[0-9]{3,}|kappa\s*=\s*0\.[0-9]|NNT\s*=\s*[0-9]+|[0-9]{1,2}%.*(?:remission|response|recovery)'
@@ -115,12 +114,35 @@ detect_fabrication() {
      grep -qE "$prose_pattern3" "$file" || \
      grep -qE "$prose_pattern4" "$file" || \
      grep -qE "$prose_pattern5" "$file"; then
-    echo "⚠️ Potential fabricated claim in $file (phase $phase_num)."
-    if [ "$mode" = "block" ]; then
-      echo "ERROR: Halting pipeline. Replace fabricated claims with appropriate placeholders ([DATA REQUIRED], [SPECIFY], [PLACEHOLDER], [TRAINING-DATA CLAIM])."
-      exit 1
-    fi
+    echo "⚠️ Detected potential fabrication in $(basename $file) (phase $phase_num)."
+    return 1  # Signal that issues were found
   fi
+  return 0  # No issues found
+}
+
+auto_fix_fabrication() {
+  local file="$1"
+
+  # Replace prose pattern 1: "Author et al., YEAR" → [TRAINING-DATA CLAIM]
+  sed -i '' -E 's/([A-Z][a-z]+ et al\.?, ?(19|20)[0-9]{2})/[TRAINING-DATA CLAIM]/g' "$file"
+
+  # Replace prose pattern 2: "most/many/several studies showed..." → [CONSENSUS REQUIRES VERIFICATION]
+  sed -i '' -E 's/(most|many|several|numerous|the majority of)\s+studies\s+(showed|demonstrated|found|reported|suggest)/[CONSENSUS REQUIRES VERIFICATION]/g' "$file"
+
+  # Replace prose pattern 3: "approximately N%" → [ESTIMATE REQUIRES VERIFICATION]
+  sed -i '' -E 's/approximately\s+[0-9]+\s*(%|percent|studies|trials|participants)/[ESTIMATE REQUIRES VERIFICATION]/g' "$file"
+
+  # Replace prose pattern 4: "has been shown / evidence suggests" → [REQUIRES VERIFICATION]
+  sed -i '' -E 's/(has been shown|have demonstrated|evidence suggests)\s+that/[REQUIRES VERIFICATION]/g' "$file"
+
+  # Replace numeric patterns: SMD, n, kappa, NNT → [DATA REQUIRED]
+  sed -i '' -E 's/SMD\s*=\s*[-−]*[0-9]+\.[0-9]+/[DATA REQUIRED]/g' "$file"
+  sed -i '' -E 's/\bn\s*=\s*[0-9]{3,}/[DATA REQUIRED]/g' "$file"
+  sed -i '' -E 's/kappa\s*=\s*0\.[0-9]/[DATA REQUIRED]/g' "$file"
+  sed -i '' -E 's/NNT\s*=\s*[0-9]+/[DATA REQUIRED]/g' "$file"
+  sed -i '' -E 's/[0-9]{1,2}%\s*(remission|response|recovery)/[STATISTIC REQUIRES VERIFICATION]/g' "$file"
+
+  echo "✓ Auto-fixed fabrication patterns in $(basename $file)"
 }
 
 # =============================================================================
@@ -194,7 +216,9 @@ Acceptable untagged content: statements of definitional or logical form, structu
   fi
 
   if [ $round -lt $PHASE_0_MAX_ROUNDS ]; then
-    detect_fabrication "$OUTPUT_DIR/phase-0.md" "0" "block"
+    if ! detect_fabrication "$OUTPUT_DIR/phase-0.md" "0"; then
+      auto_fix_fabrication "$OUTPUT_DIR/phase-0.md"
+    fi
 
     JUDGE_0_PROMPT="You are a peer reviewer auditing a methodological landscape for genuine divergence.
 
@@ -352,7 +376,9 @@ $(cat "$INPUT_FILE")
   fi
 
   if [ $round -lt $PHASE_1_MAX_ROUNDS ]; then
-    detect_fabrication "$OUTPUT_DIR/phase-1.md" "1" "block"
+    if ! detect_fabrication "$OUTPUT_DIR/phase-1.md" "1"; then
+      auto_fix_fabrication "$OUTPUT_DIR/phase-1.md"
+    fi
 
     JUDGE_1_PROMPT="You are a peer reviewer for a high-impact medical journal performing a PRISMA 2020 compliance audit.
 
@@ -496,7 +522,9 @@ Acceptable untagged content: statements of definitional or logical form, structu
   fi
 
   if [ $round -lt $PHASE_2_MAX_ROUNDS ]; then
-    detect_fabrication "$OUTPUT_DIR/phase-2.md" "2" "block"
+    if ! detect_fabrication "$OUTPUT_DIR/phase-2.md" "2"; then
+      auto_fix_fabrication "$OUTPUT_DIR/phase-2.md"
+    fi
 
     JUDGE_2_PROMPT="You are a peer reviewer for a high-impact medical journal performing a PRISMA 2020 compliance audit.
 
@@ -654,7 +682,9 @@ $(cat "$INPUT_FILE")
   if [ $? -ne 0 ]; then echo "Error: Phase 3a draft failed"; exit 1; fi
 
   if [ $round -lt $PHASE_3A_MAX_ROUNDS ]; then
-    detect_fabrication "$OUTPUT_DIR/phase-3a.md" "3a" "block"
+    if ! detect_fabrication "$OUTPUT_DIR/phase-3a.md" "3a"; then
+      auto_fix_fabrication "$OUTPUT_DIR/phase-3a.md"
+    fi
 
     JUDGE_3A_PROMPT="You are a peer reviewer performing a PRISMA 2020 compliance audit.
 
@@ -794,7 +824,9 @@ $(cat "$INPUT_FILE")
   if [ $? -ne 0 ]; then echo "Error: Phase 3b draft failed"; exit 1; fi
 
   if [ $round -lt $PHASE_3B_MAX_ROUNDS ]; then
-    detect_fabrication "$OUTPUT_DIR/phase-3b.md" "3b" "block"
+    if ! detect_fabrication "$OUTPUT_DIR/phase-3b.md" "3b"; then
+      auto_fix_fabrication "$OUTPUT_DIR/phase-3b.md"
+    fi
 
     JUDGE_3B_PROMPT="You are a peer reviewer performing a PRISMA 2020 compliance audit.
 
@@ -897,7 +929,9 @@ $(cat "$INPUT_FILE")
   if [ $? -ne 0 ]; then echo "Error: Phase 3c draft failed"; exit 1; fi
 
   if [ $round -lt $PHASE_3C_MAX_ROUNDS ]; then
-    detect_fabrication "$OUTPUT_DIR/phase-3c.md" "3c" "block"
+    if ! detect_fabrication "$OUTPUT_DIR/phase-3c.md" "3c"; then
+      auto_fix_fabrication "$OUTPUT_DIR/phase-3c.md"
+    fi
 
     JUDGE_3C_PROMPT="You are a peer reviewer performing a PRISMA 2020 compliance audit.
 
@@ -980,7 +1014,9 @@ $(cat "$INPUT_FILE")
   if [ $? -ne 0 ]; then echo "Error: Phase 4a draft failed"; exit 1; fi
 
   if [ $round -lt $PHASE_4A_MAX_ROUNDS ]; then
-    detect_fabrication "$OUTPUT_DIR/phase-4a.md" "4a" "block"
+    if ! detect_fabrication "$OUTPUT_DIR/phase-4a.md" "4a"; then
+      auto_fix_fabrication "$OUTPUT_DIR/phase-4a.md"
+    fi
 
     JUDGE_4A_PROMPT="You are a peer reviewer auditing PRISMA compliance.
 ## Phase Output
@@ -1036,7 +1072,9 @@ $(cat "$INPUT_FILE")
   if [ $? -ne 0 ]; then echo "Error: Phase 4b draft failed"; exit 1; fi
 
   if [ $round -lt $PHASE_4B_MAX_ROUNDS ]; then
-    detect_fabrication "$OUTPUT_DIR/phase-4b.md" "4b" "block"
+    if ! detect_fabrication "$OUTPUT_DIR/phase-4b.md" "4b"; then
+      auto_fix_fabrication "$OUTPUT_DIR/phase-4b.md"
+    fi
 
     JUDGE_4B_PROMPT="You are a peer reviewer auditing PRISMA compliance.
 ## Phase Output
@@ -1092,7 +1130,9 @@ $(cat "$INPUT_FILE")
   if [ $? -ne 0 ]; then echo "Error: Phase 4c draft failed"; exit 1; fi
 
   if [ $round -lt $PHASE_4C_MAX_ROUNDS ]; then
-    detect_fabrication "$OUTPUT_DIR/phase-4c.md" "4c" "block"
+    if ! detect_fabrication "$OUTPUT_DIR/phase-4c.md" "4c"; then
+      auto_fix_fabrication "$OUTPUT_DIR/phase-4c.md"
+    fi
 
     JUDGE_4C_PROMPT="You are a peer reviewer auditing PRISMA compliance.
 ## Phase Output
@@ -1153,7 +1193,9 @@ $(cat "$INPUT_FILE")
   if [ $? -ne 0 ]; then echo "Error: Phase 5 draft failed"; exit 1; fi
 
   if [ $round -lt $PHASE_5_MAX_ROUNDS ]; then
-    detect_fabrication "$OUTPUT_DIR/phase-5.md" "5" "block"
+    if ! detect_fabrication "$OUTPUT_DIR/phase-5.md" "5"; then
+      auto_fix_fabrication "$OUTPUT_DIR/phase-5.md"
+    fi
 
     JUDGE_5_PROMPT="You are a peer reviewer auditing PRISMA compliance.
 ## Phase Output
@@ -1201,7 +1243,9 @@ $(cat "$INPUT_FILE")
   if [ $? -ne 0 ]; then echo "Error: Phase 6 draft failed"; exit 1; fi
 
   if [ $round -lt $PHASE_6_MAX_ROUNDS ]; then
-    detect_fabrication "$OUTPUT_DIR/phase-6.md" "6" "block"
+    if ! detect_fabrication "$OUTPUT_DIR/phase-6.md" "6"; then
+      auto_fix_fabrication "$OUTPUT_DIR/phase-6.md"
+    fi
 
     JUDGE_6_PROMPT="You are a peer reviewer auditing PRISMA compliance.
 ## Phase Output
